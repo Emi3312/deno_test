@@ -1,4 +1,5 @@
 import { Application, Router, Context } from "https://deno.land/x/oak@v12.5.0/mod.ts";
+import { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
 
 // Datos simulados (como si fuera una base de datos en memoria)
 interface User {
@@ -91,6 +92,7 @@ const errorHandler = async (context: Context, next: () => Promise<unknown>) => {
 const app = new Application();
 
 // Middleware
+app.use(oakCors({ origin: "*" })); // Habilitar CORS para todos los orígenes
 app.use(errorHandler); // Manejo de errores
 app.use(router.routes()); // Rutas
 app.use(router.allowedMethods()); // Métodos permitidos
